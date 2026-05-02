@@ -1,0 +1,204 @@
+// NeuroBotanica logo marks — abstract geometric, botanical metaphor
+// All marks: 96×96 viewBox, currentColor, single-weight strokes, generous negative space.
+// Designed for low-stimulation: calm symmetry, no gradients, no decorative noise.
+
+const STROKE = 5;
+
+// 1) Synapse-Leaf — leaf silhouette with a vein of synaptic dots
+function MarkSynapseLeaf({ accent = 'currentColor', ink = 'currentColor', ...props }) {
+  return (
+    <svg viewBox="0 0 96 96" fill="none" {...props}>
+      {/* leaf outline */}
+      <path
+        d="M48 10 C 22 22, 16 50, 22 76 C 48 80, 74 64, 78 36 C 78 22, 66 12, 48 10 Z"
+        stroke={ink} strokeWidth={STROKE} strokeLinejoin="round" strokeLinecap="round"
+        fill="none"
+      />
+      {/* synaptic vein — dots along central axis */}
+      <circle cx="34" cy="68" r="2.6" fill={accent} />
+      <circle cx="42" cy="56" r="3" fill={accent} />
+      <circle cx="50" cy="44" r="3.4" fill={accent} />
+      <circle cx="58" cy="32" r="3" fill={accent} />
+      <circle cx="66" cy="20" r="2.6" fill={accent} />
+      {/* connecting line */}
+      <path d="M34 68 L 66 20" stroke={accent} strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
+    </svg>
+  );
+}
+
+// 2) Bilateral Sprout — two mirrored sprouts forming an implicit N
+function MarkBilateralSprout({ accent = 'currentColor', ink = 'currentColor', ...props }) {
+  return (
+    <svg viewBox="0 0 96 96" fill="none" {...props}>
+      {/* base line — ground */}
+      <line x1="20" y1="80" x2="76" y2="80" stroke={ink} strokeWidth={STROKE} strokeLinecap="round" />
+      {/* left stem */}
+      <path d="M30 80 L 30 38" stroke={ink} strokeWidth={STROKE} strokeLinecap="round" />
+      {/* right stem */}
+      <path d="M66 80 L 66 38" stroke={ink} strokeWidth={STROKE} strokeLinecap="round" />
+      {/* diagonal connecting them — the N */}
+      <path d="M30 38 L 66 64" stroke={ink} strokeWidth={STROKE} strokeLinecap="round" />
+      {/* leaves at top — accent */}
+      <path
+        d="M30 38 C 22 32, 22 22, 30 18 C 38 22, 38 32, 30 38 Z"
+        fill={accent}
+      />
+      <path
+        d="M66 38 C 58 32, 58 22, 66 18 C 74 22, 74 32, 66 38 Z"
+        fill={accent}
+      />
+    </svg>
+  );
+}
+
+// 3) Node Tree — geometric branching, network metaphor
+function MarkNodeTree({ accent = 'currentColor', ink = 'currentColor', ...props }) {
+  const lineProps = { stroke: ink, strokeWidth: STROKE - 1, strokeLinecap: 'round' };
+  return (
+    <svg viewBox="0 0 96 96" fill="none" {...props}>
+      {/* trunk */}
+      <line x1="48" y1="86" x2="48" y2="54" {...lineProps} />
+      {/* upper branches */}
+      <line x1="48" y1="54" x2="28" y2="34" {...lineProps} />
+      <line x1="48" y1="54" x2="68" y2="34" {...lineProps} />
+      <line x1="48" y1="54" x2="48" y2="26" {...lineProps} />
+      {/* outer twigs */}
+      <line x1="28" y1="34" x2="20" y2="22" {...lineProps} />
+      <line x1="28" y1="34" x2="34" y2="20" {...lineProps} />
+      <line x1="68" y1="34" x2="76" y2="22" {...lineProps} />
+      <line x1="68" y1="34" x2="62" y2="20" {...lineProps} />
+      {/* nodes */}
+      <circle cx="48" cy="86" r="4" fill={ink} />
+      <circle cx="48" cy="54" r="4.5" fill={ink} />
+      <circle cx="28" cy="34" r="3.5" fill={ink} />
+      <circle cx="68" cy="34" r="3.5" fill={ink} />
+      {/* tip nodes — accent (the 'leaves') */}
+      <circle cx="20" cy="22" r="4" fill={accent} />
+      <circle cx="34" cy="20" r="4" fill={accent} />
+      <circle cx="48" cy="26" r="4" fill={accent} />
+      <circle cx="62" cy="20" r="4" fill={accent} />
+      <circle cx="76" cy="22" r="4" fill={accent} />
+    </svg>
+  );
+}
+
+// 4) Petal Cluster — 3 rounded petals around a center dot
+function MarkPetalCluster({ accent = 'currentColor', ink = 'currentColor', ...props }) {
+  return (
+    <svg viewBox="0 0 96 96" fill="none" {...props}>
+      <g>
+        {/* top petal */}
+        <ellipse cx="48" cy="28" rx="11" ry="20"
+          stroke={ink} strokeWidth={STROKE} fill="none" />
+        {/* bottom-left petal */}
+        <ellipse cx="30" cy="60" rx="11" ry="20"
+          stroke={ink} strokeWidth={STROKE} fill="none"
+          transform="rotate(-60 30 60)" />
+        {/* bottom-right petal */}
+        <ellipse cx="66" cy="60" rx="11" ry="20"
+          stroke={ink} strokeWidth={STROKE} fill="none"
+          transform="rotate(60 66 60)" />
+      </g>
+      {/* center accent */}
+      <circle cx="48" cy="50" r="6" fill={accent} />
+    </svg>
+  );
+}
+
+// 5) Mono Leaflet — minimal dot-leaf, wordmark-led pairing
+function MarkMonoLeaflet({ accent = 'currentColor', ink = 'currentColor', ...props }) {
+  return (
+    <svg viewBox="0 0 96 96" fill="none" {...props}>
+      {/* leaf outline — single rounded almond */}
+      <path
+        d="M24 72 C 24 40, 48 20, 76 24 C 72 52, 52 72, 24 72 Z"
+        stroke={ink} strokeWidth={STROKE} strokeLinejoin="round" fill="none"
+      />
+      {/* central vein */}
+      <path d="M30 70 L 70 30" stroke={ink} strokeWidth={STROKE - 2} strokeLinecap="round" />
+      {/* one accent dot — the 'neuro' */}
+      <circle cx="50" cy="50" r="6" fill={accent} />
+    </svg>
+  );
+}
+
+// 6) Frond Wave — fern-like row of dots arcing into a frond
+function MarkFrondWave({ accent = 'currentColor', ink = 'currentColor', ...props }) {
+  // Generate dots along an arc
+  const dots = [];
+  const cx = 48, cy = 78;
+  const rx = 38, ry = 56;
+  for (let i = 0; i < 9; i++) {
+    const t = i / 8; // 0..1
+    const angle = Math.PI * (1 - t * 0.55) ; // sweep
+    const x = cx + Math.cos(angle) * rx * 0.9;
+    const y = cy - Math.sin(angle) * ry * 0.95;
+    const r = 2 + t * 3.4;
+    const isAccent = i >= 6;
+    dots.push({ x, y, r, isAccent, key: i });
+  }
+  return (
+    <svg viewBox="0 0 96 96" fill="none" {...props}>
+      {/* stem arc */}
+      <path
+        d="M14 82 Q 30 30, 80 18"
+        stroke={ink} strokeWidth={STROKE - 1} strokeLinecap="round" fill="none"
+      />
+      {/* fronds */}
+      {dots.map(d => (
+        <circle
+          key={d.key}
+          cx={d.x} cy={d.y} r={d.r}
+          fill={d.isAccent ? accent : ink}
+        />
+      ))}
+    </svg>
+  );
+}
+
+const MARKS = [
+  {
+    id: 'synapse-leaf',
+    name: 'Synapse Leaf',
+    desc: 'A leaf whose central vein is a chain of synaptic nodes — the neuro and the botanical literally share a spine. Reads as a leaf at small sizes, reveals the synapse on closer look.',
+    Component: MarkSynapseLeaf,
+  },
+  {
+    id: 'bilateral-sprout',
+    name: 'Bilateral Sprout',
+    desc: 'Two mirrored sprouts whose stems and connecting diagonal form an implicit N. Calm bilateral symmetry — visually predictable, a regulating shape for an overstimulated mind.',
+    Component: MarkBilateralSprout,
+  },
+  {
+    id: 'node-tree',
+    name: 'Node Tree',
+    desc: 'A branching network where every junction is a node. Reads as both a tree and a synaptic graph — system-thinking made visible. The accent dots are the "blooms".',
+    Component: MarkNodeTree,
+  },
+  {
+    id: 'petal-cluster',
+    name: 'Petal Cluster',
+    desc: 'Three rounded petals around a single accent center. Emphasizes focus and clarity — the "one thing at a time" promise — wrapped in soft botanical geometry.',
+    Component: MarkPetalCluster,
+  },
+  {
+    id: 'mono-leaflet',
+    name: 'Mono Leaflet',
+    desc: 'The most reduced direction: a single almond leaf, one vein, one accent dot. Pairs hardest with a wordmark-led lockup. Best for app icons and dense interfaces.',
+    Component: MarkMonoLeaflet,
+  },
+  {
+    id: 'frond-wave',
+    name: 'Frond Wave',
+    desc: 'A fern-like arc of nodes growing along a single curving stem. Conveys rhythm, gentle progress, regulation — the small steady steps of an organized day.',
+    Component: MarkFrondWave,
+  },
+];
+
+window.MARKS = MARKS;
+window.MarkSynapseLeaf = MarkSynapseLeaf;
+window.MarkBilateralSprout = MarkBilateralSprout;
+window.MarkNodeTree = MarkNodeTree;
+window.MarkPetalCluster = MarkPetalCluster;
+window.MarkMonoLeaflet = MarkMonoLeaflet;
+window.MarkFrondWave = MarkFrondWave;
