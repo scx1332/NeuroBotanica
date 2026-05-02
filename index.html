@@ -110,12 +110,6 @@
   }
   .wordmark .accent { color: var(--accent-deep); font-weight: 500; }
 
-  /* SVG mark accents — CSS vars don't resolve when used as HTML attributes,
-     so accent paint goes through these classes. */
-  .mk-accent      { fill:   var(--accent-deep); }
-  .mk-accent-line { stroke: var(--accent-deep); }
-  .mk-ink         { fill:   var(--ink); }
-
   .brand {
     display: inline-flex;
     align-items: center;
@@ -188,7 +182,6 @@
   }
   .hero .mark-lg {
     width: 96px; height: 96px;
-    color: var(--ink);
   }
   .hero h1 {
     font-size: clamp(48px, 7.2vw, 88px);
@@ -311,7 +304,6 @@
   }
   .card .icon {
     width: 36px; height: 36px;
-    color: var(--ink);
     margin-bottom: 4px;
   }
 
@@ -502,16 +494,7 @@
 <nav class="nav" id="nav">
   <div class="container">
     <a href="#top" class="brand" aria-label="NeuroBotanica home">
-      <svg class="mark" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-        <path d="M48 10 C 22 22, 16 50, 22 76 C 48 80, 74 64, 78 36 C 78 22, 66 12, 48 10 Z"
-              stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
-        <circle cx="34" cy="68" r="2.6" class="mk-accent"/>
-        <circle cx="42" cy="56" r="3"   class="mk-accent"/>
-        <circle cx="50" cy="44" r="3.4" class="mk-accent"/>
-        <circle cx="58" cy="32" r="3"   class="mk-accent"/>
-        <circle cx="66" cy="20" r="2.6" class="mk-accent"/>
-        <path d="M34 68 L 66 20" class="mk-accent-line" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-      </svg>
+      <img class="mark" src="images/synapse-leaf.svg" alt="" aria-hidden="true"/>
       <span class="wordmark">neuro<span class="accent">botanica</span></span>
     </a>
     <div class="nav-links">
@@ -527,16 +510,7 @@
 <section id="top" class="section hero">
   <div class="container">
     <div class="hero-inner">
-      <svg class="mark-lg" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-        <path d="M48 10 C 22 22, 16 50, 22 76 C 48 80, 74 64, 78 36 C 78 22, 66 12, 48 10 Z"
-              stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
-        <circle cx="34" cy="68" r="2.6" class="mk-accent"/>
-        <circle cx="42" cy="56" r="3"   class="mk-accent"/>
-        <circle cx="50" cy="44" r="3.4" class="mk-accent"/>
-        <circle cx="58" cy="32" r="3"   class="mk-accent"/>
-        <circle cx="66" cy="20" r="2.6" class="mk-accent"/>
-        <path d="M34 68 L 66 20" class="mk-accent-line" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-      </svg>
+      <img class="mark-lg" src="images/synapse-leaf.svg" alt="" aria-hidden="true"/>
 
       <h1>Quiet tools<br/>for a <span class="accent">busy mind.</span></h1>
 
@@ -575,12 +549,7 @@
 
     <div class="cards">
       <article class="card">
-        <svg class="icon" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-          <ellipse cx="48" cy="28" rx="11" ry="20" stroke="currentColor" stroke-width="5" fill="none"/>
-          <ellipse cx="30" cy="60" rx="11" ry="20" stroke="currentColor" stroke-width="5" fill="none" transform="rotate(-60 30 60)"/>
-          <ellipse cx="66" cy="60" rx="11" ry="20" stroke="currentColor" stroke-width="5" fill="none" transform="rotate(60 66 60)"/>
-          <circle cx="48" cy="50" r="6" class="mk-accent"/>
-        </svg>
+        <img class="icon" src="images/petal-cluster.svg" alt="" aria-hidden="true"/>
         <span class="num">01 · FOCUS</span>
         <h3>One thing at a time.</h3>
         <p>
@@ -590,14 +559,7 @@
       </article>
 
       <article class="card">
-        <svg class="icon" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-          <line x1="20" y1="80" x2="76" y2="80" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <path d="M30 80 L 30 38" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <path d="M66 80 L 66 38" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <path d="M30 38 L 66 64" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <path d="M30 38 C 22 32, 22 22, 30 18 C 38 22, 38 32, 30 38 Z" class="mk-accent"/>
-          <path d="M66 38 C 58 32, 58 22, 66 18 C 74 22, 74 32, 66 38 Z" class="mk-accent"/>
-        </svg>
+        <img class="icon" src="images/bilateral-sprout.svg" alt="" aria-hidden="true"/>
         <span class="num">02 · CALM</span>
         <h3>Visually quiet.</h3>
         <p>
@@ -607,18 +569,7 @@
       </article>
 
       <article class="card">
-        <svg class="icon" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-          <line x1="48" y1="86" x2="48" y2="54" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-          <line x1="48" y1="54" x2="28" y2="34" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-          <line x1="48" y1="54" x2="68" y2="34" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-          <line x1="48" y1="54" x2="48" y2="26" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="48" cy="86" r="4" fill="currentColor"/>
-          <circle cx="48" cy="54" r="4.5" fill="currentColor"/>
-          <circle cx="28" cy="34" r="3.5" fill="currentColor"/>
-          <circle cx="68" cy="34" r="3.5" fill="currentColor"/>
-          <circle cx="48" cy="26" r="4" class="mk-accent"/>
-          <circle cx="28" cy="34" r="3.5" fill="currentColor"/>
-        </svg>
+        <img class="icon" src="images/node-tree.svg" alt="" aria-hidden="true"/>
         <span class="num">03 · GROWTH</span>
         <h3>Small, real progress.</h3>
         <p>

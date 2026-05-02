@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+  <!-- NeuroBotanica · Bilateral Sprout
+       ink:    #2A2724
+       accent: oklch(0.42 0.08 145)  ≈ #3F6B47 -->
+  <style>
+    .ink    { stroke: #2A2724; }
+    .accent { fill:   oklch(0.42 0.08 145); }
+  </style>
+
+  <!-- ground -->
+  <line class="ink" x1="20" y1="80" x2="76" y2="80"
+        stroke-width="5" stroke-linecap="round"/>
+
+  <!-- stems -->
+  <path class="ink" d="M30 80 L 30 38" stroke-width="5" stroke-linecap="round"/>
+  <path class="ink" d="M66 80 L 66 38" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- diagonal — the implicit N -->
+  <path class="ink" d="M30 38 L 66 64" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- leaves -->
+  <path class="accent" d="M30 38 C 22 32, 22 22, 30 18 C 38 22, 38 32, 30 38 Z"/>
+  <path class="accent" d="M66 38 C 58 32, 58 22, 66 18 C 74 22, 74 32, 66 38 Z"/>
+</svg>

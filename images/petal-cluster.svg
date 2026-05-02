@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+  <!-- NeuroBotanica · Petal Cluster
+       ink:    #2A2724
+       accent: oklch(0.42 0.08 145)  ≈ #3F6B47 -->
+  <style>
+    .ink    { stroke: #2A2724; }
+    .accent { fill:   oklch(0.42 0.08 145); }
+  </style>
+
+  <!-- top petal -->
+  <ellipse class="ink" cx="48" cy="28" rx="11" ry="20" stroke-width="5"/>
+  <!-- bottom-left petal -->
+  <ellipse class="ink" cx="30" cy="60" rx="11" ry="20" stroke-width="5"
+           transform="rotate(-60 30 60)"/>
+  <!-- bottom-right petal -->
+  <ellipse class="ink" cx="66" cy="60" rx="11" ry="20" stroke-width="5"
+           transform="rotate(60 66 60)"/>
+
+  <!-- center accent -->
+  <circle class="accent" cx="48" cy="50" r="6"/>
+</svg>
