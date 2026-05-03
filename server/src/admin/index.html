@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>NeuroBotanica · Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --cream: #F5F1EA;
+    --ink: #2A2724;
+    --ink-soft: #5A544C;
+    --hairline: rgba(42, 39, 36, 0.10);
+    --accent-deep: #4a6b4a;
+  }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    margin: 0;
+    padding: 32px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { color: var(--ink-soft); font-size: 13px; margin: 0 0 28px; }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .stat {
+    background: white;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .stat .k { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
+  .stat .v { font-size: 24px; font-weight: 600; margin-top: 4px; }
+  .picker { margin-bottom: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .picker label { font-size: 13px; color: var(--ink-soft); }
+  select {
+    font: inherit;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--hairline);
+    background: white;
+    color: var(--ink);
+  }
+  .canvas-wrap {
+    background: white;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 12px;
+    overflow: hidden;
+  }
+  canvas { display: block; width: 100%; height: auto; background: #f8f5ee; border-radius: 8px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  th { background: rgba(0,0,0,0.02); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; color: var(--ink-soft); }
+  tr:last-child td { border-bottom: none; }
+  .legend { font-size: 12px; color: var(--ink-soft); margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>NeuroBotanica admin</h1>
+<p class="sub">Anonymous engagement &amp; mouse heatmaps. No PII.</p>
+
+<div class="row" id="totals">
+  <div class="stat"><div class="k">Sessions</div><div class="v" id="t-sessions">—</div></div>
+  <div class="stat"><div class="k">Avg session</div><div class="v" id="t-avg">—</div></div>
+  <div class="stat"><div class="k">Desktop</div><div class="v" id="t-desktop">—</div></div>
+  <div class="stat"><div class="k">Mobile</div><div class="v" id="t-mobile">—</div></div>
+</div>
+
+<div class="picker">
+  <label for="section">Heatmap section:</label>
+  <select id="section"></select>
+  <span class="legend">Mouse positions sampled at 1Hz, normalized to each section's bounding box.</span>
+</div>
+
+<div class="canvas-wrap">
+  <canvas id="heat" width="1120" height="700"></canvas>
+</div>
+
+<table id="sections">
+  <thead>
+    <tr><th>Section</th><th>Visits</th><th>Total time</th><th>Avg per visit</th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  const fmtMs = (ms) => {
+    if (!ms) return '0s';
+    const s = Math.round(ms / 1000);
+    if (s < 60) return s + 's';
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return m + 'm ' + r + 's';
+  };
+
+  async function loadStats() {
+    const r = await fetch('/api/stats');
+    const d = await r.json();
+    document.getElementById('t-sessions').textContent = d.sessions;
+    document.getElementById('t-avg').textContent = fmtMs(d.avgSessionMs);
+    document.getElementById('t-desktop').textContent = d.devices.desktop;
+    document.getElementById('t-mobile').textContent = d.devices.mobile;
+
+    const tbody = document.querySelector('#sections tbody');
+    tbody.innerHTML = '';
+    for (const s of d.sections) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + s.section + '</td>' +
+                     '<td>' + s.visits + '</td>' +
+                     '<td>' + fmtMs(s.totalMs) + '</td>' +
+                     '<td>' + fmtMs(s.avgMs) + '</td>';
+      tbody.appendChild(tr);
+    }
+
+    const sel = document.getElementById('section');
+    const sections = d.heatmapSections.length ? d.heatmapSections : ['hero', 'promise', 'how', 'start'];
+    const prev = sel.value;
+    sel.innerHTML = '';
+    for (const sec of sections) {
+      const opt = document.createElement('option');
+      opt.value = sec; opt.textContent = sec;
+      sel.appendChild(opt);
+    }
+    if (prev && sections.includes(prev)) sel.value = prev;
+    return sel.value;
+  }
+
+  async function drawHeat(section) {
+    const canvas = document.getElementById('heat');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+    if (!section) return;
+    const r = await fetch('/api/heatmap/' + encodeURIComponent(section));
+    const d = await r.json();
+
+    ctx.globalCompositeOperation = 'lighter';
+    for (const p of d.points) {
+      const x = p.x * W;
+      const y = p.y * H;
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, 28);
+      grad.addColorStop(0, 'rgba(74, 107, 74, 0.35)');
+      grad.addColorStop(1, 'rgba(74, 107, 74, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(x - 28, y - 28, 56, 56);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+
+    if (d.points.length === 0) {
+      ctx.fillStyle = '#9A9286';
+      ctx.font = '14px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('No data yet for "' + section + '". Visit the site to generate some.', W / 2, H / 2);
+    }
+  }
+
+  document.getElementById('section').addEventListener('change', (e) => drawHeat(e.target.value));
+
+  (async function () {
+    const initial = await loadStats();
+    await drawHeat(initial);
+    setInterval(async () => {
+      const s = await loadStats();
+      await drawHeat(s);
+    }, 5000);
+  })();
+</script>
+</body>
+</html>
