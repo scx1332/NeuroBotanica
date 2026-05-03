@@ -188,9 +188,10 @@ export function useAnonymousTracking() {
       const sessionId = sessionIdRef.current;
       if (!sessionId) return;
 
-      if (final && visibleRef.current) {
-        recordActiveSection(Date.now());
-        activeSectionStartedMsRef.current = Date.now();
+      if (visibleRef.current) {
+        const snapshotAtMs = Date.now();
+        recordActiveSection(snapshotAtMs);
+        activeSectionStartedMsRef.current = snapshotAtMs;
       }
 
       const sectionEvents = sectionQueueRef.current.splice(0);
